@@ -1,4 +1,5 @@
 @game_hash = {}
+require 'colorize'
 
 def welcome 
     @game_hash = {
@@ -19,16 +20,20 @@ def welcome
     player_2_score: 0,
     player_2_frags: 0
   }
-  puts "Death Math"
-  puts "Player 1 enter your username: "
-  @game_hash[:player_1_name] = gets.chomp
-  puts "Player 2 enter your username: "
-  @game_hash[:player_2_name] = gets.chomp
+  puts "++ ============================================= ++".red 
+  puts "|                   Death Math                    |".red
+  puts "++ ============================================= ++".red
+
+  print "Player 1 enter your username: "
+    @game_hash[:player_1_name] = gets.chomp
+  print "Player 2 enter your username: "
+    @game_hash[:player_2_name] = gets.chomp
+
   new_game
 end
 
 def new_game  
-  puts "Frag limit : "
+  print "Frag limit: ".red
   @game_hash[:player_1_lives] = gets.chomp.to_i
   @game_hash[:player_1_start] = @game_hash[:player_1_lives]
   @game_hash[:player_2_lives] = @game_hash[:player_1_lives]
@@ -135,17 +140,15 @@ def timer_end
 end
 
 def display_question
-    puts "Press Enter when ready"
   if @game_hash[:player_turn] == 1
-    puts "#{@game_hash[:player_1_name]}"
-    puts "#{timer_limit} seconds"
+    puts "#{@game_hash[:player_1_name]} took #{timer_limit} seconds"
   else
-    puts "#{@game_hash[:player_2_name]}" 
-    puts "#{timer_limit} seconds" 
+    puts "#{@game_hash[:player_2_name]} took #{timer_limit} seconds"
   end
+  print "Press Enter when ready "
   gets.chomp
   timer_start
-  puts "#{@game_hash[:random_number1]} + #{@game_hash[:random_number2]} = ???"
+  print "#{@game_hash[:random_number1]} + #{@game_hash[:random_number2]} = "
   player_attempt
 end
 
@@ -162,12 +165,15 @@ def display_score
   player_1_frags = @game_hash[:player_1_start] - @game_hash[:player_2_lives] 
   @game_hash[:player_1_frags] = player_1_frags
   @game_hash[:player_2_frags] = player_2_frags
-  puts "#{@game_hash[:player_1_name]}"
-  puts "frags: #{player_1_frags}  rating: #{player_1_points}"
-  puts "#{@game_hash[:player_2_name]}" 
-  puts "frags: #{player_2_frags}  rating: #{player_2_points}"
+  puts "============= SCORE ==================="
+  puts "player 1: #{@game_hash[:player_1_name]}"
+  print "frags: #{player_1_frags} ".red
+  puts "rating: #{player_1_points}".blue
+  puts "player 2: #{@game_hash[:player_2_name]}" 
+  print "frags: #{player_2_frags} ".red 
+  puts "rating: #{player_2_points}".blue
+  puts "======================================="
   puts "LEVEL: #{@game_hash[:level_counter]} FRAGLIMIT: #{@game_hash[:player_1_start]}"
-  puts 
 end
 
 welcome
